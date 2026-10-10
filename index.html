@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jumia Carrier | Apply & Pay</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    /* Main card */
+    .carrier-card {
+      max-width: 1100px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    /* Jumia header stripe */
+    .jumia-header {
+      background: #f68b1e;
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-icon {
+      font-size: 2rem;
+      color: #ffffff;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+
+    .logo-text span {
+      font-weight: 300;
+      color: #fff5e6;
+    }
+
+    .carrier-badge {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.35rem 1rem;
+      border-radius: 40px;
+      color: white;
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Main content grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 0;
+    }
+
+    /* Left side - Job info */
+    .job-panel {
+      padding: 2rem 2rem 2rem 2rem;
+      border-right: 1px solid #eef1f5;
+    }
+
+    .job-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e293b;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+
+    .job-sub {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: #64748b;
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .job-sub i {
+      color: #f68b1e;
+      width: 1.1rem;
+    }
+
+    .job-sub .tag {
+      background: #f1f5f9;
+      padding: 0.25rem 0.75rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      color: #f68b1e;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-label i {
+      font-size: 0.9rem;
+    }
+
+    .benefits-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .benefits-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      font-size: 0.98rem;
+      color: #1e293b;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .benefits-list li i {
+      color: #10b981;
+      font-size: 1rem;
+      margin-top: 0.2rem;
+      min-width: 1.2rem;
+    }
+
+    .job-desc {
+      background: #f8fafc;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1.2rem;
+      margin: 1.5rem 0 0.5rem;
+      border-left: 4px solid #f68b1e;
+      font-size: 0.95rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    /* Right side - Application form */
+    .form-panel {
+      background: #ffffff;
+      padding: 2rem 2rem 2rem 2rem;
+    }
+
+    .form-header {
+      margin-bottom: 1.8rem;
+    }
+
+    .form-header h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-header h2 i {
+      color: #f68b1e;
+      font-size: 1.4rem;
+    }
+
+    .form-header p {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 0.3rem;
+    }
+
+    .fee-badge {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #c2410c;
+      padding: 0.7rem 1rem;
+      border-radius: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+      font-size: 0.95rem;
+    }
+
+    .fee-amount {
+      background: #f68b1e;
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.4rem;
+    }
+
+    .input-group label i {
+      color: #f68b1e;
+      margin-right: 0.3rem;
+      width: 1rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 1rem;
+      font-size: 0.95rem;
+      background: #ffffff;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: #f68b1e;
+      box-shadow: 0 0 0 4px rgba(246, 139, 30, 0.15);
+    }
+
+    .input-group input::placeholder {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .payment-methods {
+      margin: 1.5rem 0 1.2rem;
+    }
+
+    .payment-methods p {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 0.7rem;
+    }
+
+    .method-options {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .method {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      padding: 0.6rem 1rem;
+      border-radius: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1e293b;
+      cursor: default;
+    }
+
+    .method i {
+      color: #f68b1e;
+    }
+
+    .pay-button {
+      background: #f68b1e;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 1.2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 10px 20px -8px rgba(246, 139, 30, 0.4);
+      margin: 1.8rem 0 1rem;
+      border: 1px solid #e07b0e;
+    }
+
+    .pay-button:hover {
+      background: #e07b0e;
+    }
+
+    .pay-button:active {
+      transform: scale(0.98);
+    }
+
+    .pay-button i {
+      font-size: 1.1rem;
+    }
+
+    .terms {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+
+    .terms a {
+      color: #f68b1e;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Message */
+    .message-box {
+      margin-top: 1rem;
+      padding: 0.8rem;
+      border-radius: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .message-box.show {
+      display: flex;
+    }
+
+    .message-box.error {
+      background: #fef2f2;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+
+    /* Responsive */
+    @media (max-width: 820px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .job-panel {
+        border-right: none;
+        border-bottom: 1px solid #eef1f5;
+        padding: 1.8rem;
+      }
+
+      .form-panel {
+        padding: 1.8rem;
+      }
+
+      .jumia-header {
+        padding: 0.9rem 1.5rem;
+      }
+
+      .logo-text {
+        font-size: 1.6rem;
+      }
+
+      body {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .carrier-card {
+        border-radius: 1.5rem;
+      }
+
+      .job-title {
+        font-size: 1.6rem;
+      }
+
+      .job-panel,
+      .form-panel {
+        padding: 1.4rem;
+      }
+
+      .fee-badge {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .method-options {
+        gap: 0.5rem;
+      }
+
+      .method {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.8rem;
+      }
+
+      .logo-text {
+        font-size: 1.4rem;
+      }
+
+      .carrier-badge {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.8rem;
+      }
+    }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="carrier-card">
+    <!-- Jumia Header -->
+    <div class="jumia-header">
+      <div class="logo-area">
+        <i class="fas fa-shopping-bag logo-icon"></i>
+        <div class="logo-text">Jumia <span>Carrier</span></div>
+      </div>
+      <div class="carrier-badge">
+        <i class="fas fa-truck"></i> Delivery Career
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-grid">
+      <!-- Left side: Job info -->
+      <div class="job-panel">
+        <h1 class="job-title">Delivery Associate</h1>
+        <div class="job-sub">
+          <span><i class="fas fa-map-pin"></i> Nairobi, Kenya</span>
+          <span><i class="fas fa-clock"></i> Full-time / Part-time</span>
+          <span class="tag">Earn up to KSh 45K/mo</span>
+        </div>
+
+        <div class="section-label">
+          <i class="fas fa-gift"></i> What you get
+        </div>
+        <ul class="benefits-list">
+          <li><i class="fas fa-check-circle"></i> Weekly pay & performance bonuses</li>
+          <li><i class="fas fa-check-circle"></i> Free delivery gear & uniform</li>
+          <li><i class="fas fa-check-circle"></i> Health insurance cover (after 3 months)</li>
+          <li><i class="fas fa-check-circle"></i> Flexible shifts & route options</li>
+          <li><i class="fas fa-check-circle"></i> Career growth with Jumia</li>
+        </ul>
+
+        <div class="job-desc">
+          <i class="fas fa-quote-left" style="color: #f68b1e; margin-right: 0.4rem;"></i>
+          Join Kenya's leading e-commerce delivery network. As a Jumia Carrier, you'll deliver smiles to customers across the city. 
+          Own a motorcycle or bicycle? Great! If not, we'll help you get started.
+        </div>
+      </div>
+
+      <!-- Right side: Application form + payment -->
+      <div class="form-panel">
+        <div class="form-header">
+          <h2><i class="fas fa-file-signature"></i> Apply now</h2>
+          <p>Fill the form & complete registration</p>
+        </div>
+
+        <!-- Fee reminder -->
+        <div class="fee-badge">
+          <span><i class="fas fa-shield-alt" style="margin-right: 6px;"></i> Registration fee (one-time)</span>
+          <span class="fee-amount">KSh 129.98</span>
+        </div>
+
+        <!-- Form -->
+        <form id="applicationForm">
+          <div class="input-group">
+            <label><i class="fas fa-user"></i> Full name</label>
+            <input type="text" id="fullName" placeholder="e.g. John Kamau" required>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-envelope"></i> Email address</label>
+            <input type="email" id="email" placeholder="john@example.com" required>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-phone-alt"></i> Phone number</label>
+            <input type="tel" id="phone" placeholder="0712 345 678" required>
+          </div>
+
+          <div class="payment-methods">
+            <p><i class="fas fa-credit-card" style="margin-right: 4px;"></i> Pay with</p>
+            <div class="method-options">
+              <div class="method"><i class="fab fa-cc-mpesa"></i> M-Pesa</div>
+              <div class="method"><i class="fas fa-mobile-alt"></i> Airtel Money</div>
+              <div class="method"><i class="fas fa-university"></i> Card</div>
+            </div>
+          </div>
+
+          <button type="submit" class="pay-button" id="payBtn">
+            <i class="fas fa-lock"></i> Pay KSh 129.98 & Apply
+          </button>
+
+          <div class="terms">
+            By proceeding, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. 
+            The fee covers background verification & onboarding.
+          </div>
+        </form>
+
+        <!-- Message area (success / error) -->
+        <div class="message-box" id="messageBox">
+          <i class="fas fa-check-circle"></i>
+          <span id="messageText">Payment successful! Your application is being processed.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const form = document.getElementById('applicationForm');
+      const payBtn = document.getElementById('payBtn');
+      const messageBox = document.getElementById('messageBox');
+      const messageText = document.getElementById('messageText');
+
+      // Helper to show message
+      function showMessage(text, isError = false) {
+        messageText.textContent = text;
+        messageBox.classList.add('show');
+        if (isError) {
+          messageBox.classList.add('error');
+        } else {
+          messageBox.classList.remove('error');
+        }
+      }
+
+      function hideMessage() {
+        messageBox.classList.remove('show', 'error');
+      }
+
+      // Validation
+      function validateForm() {
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+
+        if (!fullName || fullName.length < 3) {
+          showMessage('Please enter a valid full name (min 3 characters).', true);
+          return false;
+        }
+
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+          showMessage('Please enter a valid email address.', true);
+          return false;
+        }
+
+        if (!phone || phone.length < 7) {
+          showMessage('Please enter a valid phone number.', true);
+          return false;
+        }
+
+        hideMessage();
+        return true;
+      }
+
+      // Simulate payment + application
+      function processPayment() {
+        // Show loading state
+        const originalText = payBtn.innerHTML;
+        payBtn.disabled = true;
+        payBtn.innerHTML = '<span class="spinner"></span> Processing payment...';
+
+        // Simulate API call / payment delay
+        setTimeout(() => {
+          // Reset button
+          payBtn.disabled = false;
+          payBtn.innerHTML = originalText;
+
+          // Show success message
+          showMessage('✅ Payment of KSh 129.98 received! Your application has been submitted successfully.', false);
+          
+          // Optionally reset form after success (but keep values? we can reset)
+          // We'll just reset the form fields and keep message visible
+          form.reset();
+
+          // You could redirect or show more details, but we keep it simple
+
+          // Auto-hide message after 8 seconds? (optional)
+          // But we want the user to see it, so we'll keep it.
+          // If you want to hide later, uncomment:
+          // setTimeout(() => hideMessage(), 8000);
+
+        }, 1800); // simulate network
+      }
+
+      // Handle form submit
+      form.addEventListener('submit', (e) => {
+        e.preventDefault(); // prevent actual submission
+
+        // Validate form
+        if (!validateForm()) {
+          return;
+        }
+
+        // Call payment simulation
+        processPayment();
+      });
+
+      // Extra: hide message on input change (optional UX)
+      const inputs = form.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.addEventListener('input', () => {
+          if (messageBox.classList.contains('show')) {
+            // Don't hide error immediately? we can hide if it's error and user types
+            if (messageBox.classList.contains('error')) {
+              hideMessage();
+            }
+          }
+        });
+      });
+
+      // Hide message on page load (just in case)
+      hideMessage();
+    })();
+  </script>
+</body>
+</html>
